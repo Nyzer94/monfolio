@@ -90,6 +90,26 @@
         .accent-text {
             color: var(--accent);
         }
+        
+        /* NOUVEAU : Badge Hook */
+        .hook-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin: 0 auto 30px auto;
+            max-width: fit-content;
+        }
+        .hook-badge i {
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
 
         /* =========================================
            COMPOSANTS (Boutons, Cartes)
@@ -152,6 +172,53 @@
         .bento-card:hover {
             border-color: var(--accent);
             transform: translateY(-5px);
+        }
+        
+        /* Utilitaire Grid pour Bento */
+        .col-span-2 {
+            grid-column: span 2;
+        }
+        
+        /* Animation Flip Boutons */
+        .js-flip-btn {
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+        
+        .js-flip-btn.flipped {
+            transform: rotateX(180deg);
+        }
+        
+        .js-flip-btn .btn-text {
+            backface-visibility: hidden;
+        }
+        
+        .js-flip-btn::after {
+            content: attr(data-back);
+            position: absolute;
+            top: 0; left: 0; 
+            width: 100%; height: 100%;
+            transform: rotateX(180deg);
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background-color: inherit;
+            font-size: 0.9rem;
+        }
+        
+        .btn-secondary.js-flip-btn::after {
+            background-color: var(--bg-main);
+            border: 2px solid var(--border-color);
+            top: -2px; left: -2px;
+            width: calc(100% + 4px); height: calc(100% + 4px);
+        }
+        
+        .btn-primary.js-flip-btn::after {
+             background-color: var(--accent);
+             color: var(--bg-main);
         }
 
         /* =========================================
@@ -394,6 +461,10 @@
             .pricing-card {
                 padding: 32px;
             }
+            
+            .col-span-2 {
+                grid-column: span 1;
+            }
         }
 
     </style>
@@ -414,6 +485,10 @@
     <main>
         <section id="hero">
             <div class="container">
+                <div class="hook-badge">
+                    <i class="ph ph-info"></i>
+                    <span>Did you know? Les recruteurs passent en moyenne 6 secondes sur un CV. Un portfolio capte leur attention 20x plus longtemps.</span>
+                </div>
                 <h1>Arrête d'envoyer des <br> <span class="accent-text">PDF moches.</span></h1>
                 
                 <p class="subtitle">
@@ -440,12 +515,6 @@
                 
                 <div class="bento-grid">
                     <div class="bento-card">
-                        <i class="ph ph-infinity feature-icon"></i>
-                        <h3>Hébergé à vie</h3>
-                        <p>Pas d'abonnement caché. Tu paies une fois, ton site reste en ligne pour toujours grâce à l'architecture moderne (Netlify).</p>
-                    </div>
-                    
-                    <div class="bento-card">
                         <i class="ph ph-pencil-simple-line feature-icon"></i>
                         <h3>100% Autonome</h3>
                         <p>Ajoute tes projets, change ton CV ou tes photos via une interface admin ultra-simple. Zéro code requis.</p>
@@ -457,10 +526,10 @@
                         <p>Fini les sites Wix lents. Ton portfolio est optimisé, rapide, en Dark Mode, et validé par les recruteurs tech.</p>
                     </div>
                     
-                    <div class="bento-card">
-                        <i class="ph ph-lock-key feature-icon"></i>
-                        <h3>Code Privé & Sécurisé</h3>
-                        <p>Ton code source t'appartient et reste privé sur GitHub. Seul le site final est visible par les recruteurs.</p>
+                    <div class="bento-card col-span-2">
+                        <i class="ph ph-shield-check feature-icon"></i>
+                        <h3>Hébergement Sécurisé & Code Privé</h3>
+                        <p>Ton site reste en ligne à vie gratuitement sur Netlify, et ton code source est stocké en sécurité sur GitHub. Personne ne peut le voler.</p>
                     </div>
                 </div>
             </div>
@@ -469,7 +538,7 @@
         <section id="demo">
             <div class="container">
                 <h2>Ne nous crois pas sur parole. <br><span class="accent-text">Vois le résultat.</span></h2>
-                <a href="#" target="_blank" class="btn-secondary">
+                <a href="https://rayanchennaoui.online" target="_blank" class="btn-secondary">
                     Voir un exemple en live <i class="ph ph-arrow-square-out" style="vertical-align: middle; margin-left: 5px;"></i>
                 </a>
             </div>
@@ -493,7 +562,9 @@
                             <li><i class="ph ph-check-circle"></i> URL en <code>ton-nom.netlify.app</code></li>
                         </ul>
                         
-                        <a href="#" class="btn-secondary" style="text-align: center;">Choisir l'Essentiel</a>
+                        <a href="#" class="btn-secondary js-flip-btn" data-back="Contacte-nous : hello@monfolio.fake" style="text-align: center;">
+                            <span class="btn-text">Choisir l'Essentiel</span>
+                        </a>
                     </div>
 
                     <div class="bento-card pricing-card pro">
@@ -511,7 +582,9 @@
                         </ul>
                         <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 20px;">* Achat du nom de domaine non inclus (~10€/an chez Namecheap)</p>
                         
-                        <a href="#" class="btn-primary" style="text-align: center; box-shadow: none; border: 2px solid var(--accent);">Passer Pro</a>
+                        <a href="#" class="btn-primary js-flip-btn" data-back="Contacte-nous : hello@monfolio.fake" style="text-align: center; box-shadow: none; border: 2px solid var(--accent);">
+                            <span class="btn-text">Passer Pro</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -528,5 +601,14 @@
         </div>
     </footer>
 
+    <script>
+        // Gestion de l'effet Flip sur les boutons d'achat
+        document.querySelectorAll('.js-flip-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault(); // Empêche le lien de changer de page
+                this.classList.toggle('flipped'); // Active l'animation CSS
+            });
+        });
+    </script>
 </body>
 </html>
