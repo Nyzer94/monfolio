@@ -174,11 +174,6 @@
             transform: translateY(-5px);
         }
         
-        /* Utilitaire Grid pour Bento */
-        .col-span-2 {
-            grid-column: span 2;
-        }
-        
         /* Animation Flip Boutons */
         .js-flip-btn {
             position: relative;
@@ -254,7 +249,7 @@
         ========================================= */
         #hero {
             padding-top: 180px; /* Espace pour le header fixe */
-            padding-bottom: var(--section-spacing);
+            padding-bottom: 0; /* La section suivante contient maintenant l'image */
             text-align: center;
             /* Petit effet de dégradé subtil en fond */
             background: radial-gradient(circle at center top, rgba(212, 255, 0, 0.08) 0%, rgba(10,10,10,0) 50%);
@@ -272,24 +267,26 @@
             margin: 0 auto 40px auto;
         }
 
-        /* Placeholder pour le mockup d'ordinateur */
-        .hero-mockup-placeholder {
+        /* Wrapper pour l'image du mockup avec effet glow */
+        .hero-image-wrapper {
             margin-top: 60px;
-            width: 100%;
+            position: relative;
             max-width: 900px;
-            height: 500px;
-            /* Un dégradé stylé en attendant ta vraie image */
-            background: linear-gradient(45deg, #1a1a1a, #262626);
-            border-radius: var(--border-radius-bento);
-            border: 1px solid var(--border-color);
             margin-left: auto;
             margin-right: auto;
-            position: relative;
-            overflow: hidden;
+        }
+
+        .hero-image-wrapper img {
+            width: 100%;
+            height: auto;
+            border-radius: var(--border-radius-bento);
+            border: 1px solid var(--border-color);
+            display: block;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5); /* Ombre portée stylée */
         }
         
-        /* Effet de lumière sur le mockup */
-        .hero-mockup-placeholder::after {
+        /* Glow derrière l'image */
+        .hero-image-wrapper::after {
             content: '';
             position: absolute;
             top: 50%;
@@ -318,8 +315,14 @@
         /* La grille Bento */
         .bento-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: 1fr;
             gap: 24px;
+        }
+
+        @media (min-width: 1024px) {
+            .bento-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
         /* Style des icônes dans les cartes */
@@ -461,10 +464,6 @@
             .pricing-card {
                 padding: 32px;
             }
-            
-            .col-span-2 {
-                grid-column: span 1;
-            }
         }
 
     </style>
@@ -499,39 +498,6 @@
                 <a href="#pricing" class="btn-primary">
                     Obtenir mon Folio (9,99€)
                 </a>
-
-                <div class="hero-mockup-placeholder">
-                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--text-secondary); font-family: var(--font-heading); text-align: center;">
-                        [ Visuel Mockup MacBook ici ]<br>
-                        <span style="color: var(--accent)">Portfolio stylé en Dark Mode</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="features">
-            <div class="container">
-                <h2 class="section-title">Pourquoi c'est <span class="accent-text">mieux</span> ?</h2>
-                
-                <div class="bento-grid">
-                    <div class="bento-card">
-                        <i class="ph ph-pencil-simple-line feature-icon"></i>
-                        <h3>100% Autonome</h3>
-                        <p>Ajoute tes projets, change ton CV ou tes photos via une interface admin ultra-simple. Zéro code requis.</p>
-                    </div>
-                    
-                    <div class="bento-card">
-                        <i class="ph ph-lightning feature-icon"></i>
-                        <h3>Design qui claque</h3>
-                        <p>Fini les sites Wix lents. Ton portfolio est optimisé, rapide, en Dark Mode, et validé par les recruteurs tech.</p>
-                    </div>
-                    
-                    <div class="bento-card col-span-2">
-                        <i class="ph ph-shield-check feature-icon"></i>
-                        <h3>Hébergement Sécurisé & Code Privé</h3>
-                        <p>Ton site reste en ligne à vie gratuitement sur Netlify, et ton code source est stocké en sécurité sur GitHub. Personne ne peut le voler.</p>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -541,6 +507,38 @@
                 <a href="https://rayanchennaoui.online" target="_blank" class="btn-secondary">
                     Voir un exemple en live <i class="ph ph-arrow-square-out" style="vertical-align: middle; margin-left: 5px;"></i>
                 </a>
+                <div class="hero-image-wrapper">
+                    <img src="images/mockup.png" alt="Aperçu du portfolio" class="hero-mockup">
+                </div>
+            </div>
+        </section>
+
+        <section id="features">
+            <div class="container">
+                <h2 class="section-title">Pourquoi c'est <span class="accent-text">mieux</span> ?</h2>
+                
+                <div class="bento-grid">
+                    <!-- Carte 1 : Hébergement & Sécurité -->
+                    <div class="bento-card">
+                        <i class="ph ph-shield-check feature-icon"></i>
+                        <h3>Hébergement & Sécurité</h3>
+                        <p>Ton site est hébergé gratuitement sur Netlify et ton code reste privé sur GitHub. Sécurité maximale.</p>
+                    </div>
+                    
+                    <!-- Carte 2 : Autonome -->
+                    <div class="bento-card">
+                        <i class="ph ph-pencil-simple-line feature-icon"></i>
+                        <h3>100% Autonome</h3>
+                        <p>Ajoute tes projets, change ton CV ou tes photos via une interface admin ultra-simple. Zéro code requis.</p>
+                    </div>
+                    
+                    <!-- Carte 3 : Design -->
+                    <div class="bento-card">
+                        <i class="ph ph-lightning feature-icon"></i>
+                        <h3>Design Modern</h3>
+                        <p>Un site optimisé, rapide, en Dark Mode, conçu pour impressionner les recruteurs tech.</p>
+                    </div>
+                </div>
             </div>
         </section>
 
