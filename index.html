@@ -249,7 +249,7 @@
         ========================================= */
         #hero {
             padding-top: 180px; /* Espace pour le header fixe */
-            padding-bottom: 0; /* La section suivante contient maintenant l'image */
+            padding-bottom: 150px; /* Espace augmenté avant la section suivante */
             text-align: center;
             /* Petit effet de dégradé subtil en fond */
             background: radial-gradient(circle at center top, rgba(212, 255, 0, 0.08) 0%, rgba(10,10,10,0) 50%);
@@ -269,11 +269,10 @@
 
         /* Wrapper pour l'image du mockup avec effet glow */
         .hero-image-wrapper {
-            margin-top: 60px;
+            margin-top: 0;
             position: relative;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
+            max-width: 450px;
+            width: 100%;
         }
 
         .hero-image-wrapper img {
@@ -342,16 +341,21 @@
            SECTION 3: DEMO (La preuve)
         ========================================= */
         #demo {
-            padding: 100px 0;
-            background-color: rgba(255, 255, 255, 0.02); /* Fond légèrement différent */
-            text-align: center;
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 100px;
+            /* Suppression du fond et des bordures */
+            background-color: transparent;
+            border: none;
         }
 
-        #demo h2 {
-            font-size: 3rem;
-            margin-bottom: 40px;
+        #demo .container {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        #demo h3 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
         }
 
         /* =========================================
@@ -464,6 +468,11 @@
             .pricing-card {
                 padding: 32px;
             }
+            
+            #demo .container {
+                flex-direction: column;
+                text-align: center;
+            }
         }
 
     </style>
@@ -484,31 +493,22 @@
     <main>
         <section id="hero">
             <div class="container">
-                <div class="hook-badge">
-                    <i class="ph ph-info"></i>
-                    <span>Did you know? Les recruteurs passent en moyenne 6 secondes sur un CV. Un portfolio capte leur attention 20x plus longtemps.</span>
-                </div>
-                <h1>Arrête d'envoyer des <br> <span class="accent-text">PDF moches.</span></h1>
+                <h1>C'est la guerre des stages.<br> <span class="accent-text">Fais la différence.</span></h1>
                 
                 <p class="subtitle">
-                    Ton portfolio d'ingénieur professionnel, en ligne en 24h. 
-                    Sans toucher une ligne de code. Pour le prix d'un Kebab.
+                    On postule tous aux mêmes offres. Un CV ne suffit plus. Crée ton portfolio pro pour te démarquer immédiatement.
                 </p>
-                
-                <a href="#pricing" class="btn-primary">
-                    Obtenir mon Folio (9,99€)
-                </a>
             </div>
         </section>
 
         <section id="demo">
             <div class="container">
-                <h2>Ne nous crois pas sur parole. <br><span class="accent-text">Vois le résultat.</span></h2>
-                <a href="https://rayanchennaoui.online" target="_blank" class="btn-secondary">
-                    Voir un exemple en live <i class="ph ph-arrow-square-out" style="vertical-align: middle; margin-left: 5px;"></i>
-                </a>
                 <div class="hero-image-wrapper">
-                    <img src="images/mockup.jpg" alt="Aperçu du portfolio" class="hero-mockup">
+                    <img src="images/mockup.png" alt="Aperçu du portfolio" class="hero-mockup">
+                </div>
+                <div class="text-content">
+                    <h3 class="accent-text">Pourquoi un portfolio ?</h3>
+                    <p>Un CV tient sur une page, c'est trop court pour montrer qui tu es vraiment. Ton portfolio est l'extension indispensable de ta candidature. C'est l'endroit idéal pour centraliser tes rapports de projets (PDF), tes créations personnelles, et détailler tes ambitions futures là où un CV te limite.</p>
                 </div>
             </div>
         </section>
