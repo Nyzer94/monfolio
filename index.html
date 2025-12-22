@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MonFolio. - Ton portfolio d'ingénieur pro en 24h.</title>
+    <meta name="description" content="Arrête d'envoyer des PDF moches. Obtiens ton portfolio d'ingénieur professionnel, en ligne, sans coder.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* =========================================
+           VARIABLES CSS (C'est ici qu'on change les couleurs !)
+        ========================================= --> */
+        :root {
+            /* Palette Dark Mode */
+            --bg-main: #0A0A0A;       /* Fond principal (presque noir) */
+            --bg-card: rgba(255, 255, 255, 0.03); /* Fond des cartes (effet verre subtil) */
+            --text-primary: #EDEDED;  /* Titres et texte important (blanc cassé) */
+            --text-secondary: #A1A1AA;/* Sous-titres (gris métal) */
+            --border-color: #333333;  /* Bordures fines */
+            
+            /* COULEUR D'ACCENT (Le "Pop") */
+            /* Change ce code pour passer au violet plus tard (ex: #8B5CF6) */
+            --accent: #D4FF00; /* Lime Green Électrique */
+            
+            /* Polices */
+            --font-heading: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            
+            /* Dimensions standards */
+            --container-width: 1200px;
+            --border-radius-bento: 24px; /* Arrondi des cartes */
+            --section-spacing: 100px;    /* Espace entre les sections */
+        }
+
+        /* =========================================
+           RESET & STYLES DE BASE
+        ========================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        p {
+            color: var(--text-secondary);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s ease;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Utilitaire pour les conteneurs */
+        .container {
+            width: 90%;
+            max-width: var(--container-width);
+            margin: 0 auto;
+        }
+
+        /* Utilitaire pour le texte coloré */
+        .accent-text {
+            color: var(--accent);
+        }
+
+        /* =========================================
+           COMPOSANTS (Boutons, Cartes)
+        ========================================= */
+        
+        /* Bouton Principal (CTA) avec effet Glow */
+        .btn-primary {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--bg-main); /* Texte foncé sur fond clair */
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            /* L'effet "Glow" néon */
+            box-shadow: 0 10px 25px -10px rgba(212, 255, 0, 0.5); 
+        }
+
+        /* Bouton Secondaire (Bordure uniquement) */
+        .btn-secondary {
+            display: inline-block;
+            background-color: transparent;
+            color: var(--text-primary);
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            background-color: rgba(212, 255, 0, 0.05);
+        }
+
+        /* Carte style "Bento" générique */
+        .bento-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-bento);
+            padding: 32px;
+            transition: all 0.4s ease;
+            /* Subtil effet de verre dépoli */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .bento-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        /* =========================================
+           HEADER & NAVIGATION
+        ========================================= */
+        header {
+            padding: 20px 0;
+            position: fixed; /* Reste en haut quand on scrolle */
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            /* Fond semi-transparent pour le header */
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        /* =========================================
+           SECTION 1: HERO (L'accroche)
+        ========================================= */
+        #hero {
+            padding-top: 180px; /* Espace pour le header fixe */
+            padding-bottom: var(--section-spacing);
+            text-align: center;
+            /* Petit effet de dégradé subtil en fond */
+            background: radial-gradient(circle at center top, rgba(212, 255, 0, 0.08) 0%, rgba(10,10,10,0) 50%);
+        }
+
+        #hero h1 {
+            font-size: clamp(3rem, 8vw, 5rem); /* Taille responsive : gros sur PC, adapté sur mobile */
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        #hero .subtitle {
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+        }
+
+        /* Placeholder pour le mockup d'ordinateur */
+        .hero-mockup-placeholder {
+            margin-top: 60px;
+            width: 100%;
+            max-width: 900px;
+            height: 500px;
+            /* Un dégradé stylé en attendant ta vraie image */
+            background: linear-gradient(45deg, #1a1a1a, #262626);
+            border-radius: var(--border-radius-bento);
+            border: 1px solid var(--border-color);
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Effet de lumière sur le mockup */
+        .hero-mockup-placeholder::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50%;
+            height: 50%;
+            background: var(--accent);
+            filter: blur(150px);
+            opacity: 0.15;
+            transform: translate(-50%, -50%);
+        }
+
+        /* =========================================
+           SECTION 2: FEATURES (Pourquoi ?) - BENTO GRID
+        ========================================= */
+        #features {
+            padding: var(--section-spacing) 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+        }
+
+        /* La grille Bento */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        /* Style des icônes dans les cartes */
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 24px;
+            display: inline-block;
+        }
+
+        .bento-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        /* =========================================
+           SECTION 3: DEMO (La preuve)
+        ========================================= */
+        #demo {
+            padding: 100px 0;
+            background-color: rgba(255, 255, 255, 0.02); /* Fond légèrement différent */
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        #demo h2 {
+            font-size: 3rem;
+            margin-bottom: 40px;
+        }
+
+        /* =========================================
+           SECTION 4: PRICING (Les tarifs)
+        ========================================= */
+        #pricing {
+            padding: var(--section-spacing) 0;
+        }
+
+        .pricing-grid {
+            display: flex;
+            gap: 32px;
+            justify-content: center;
+            flex-wrap: wrap; /* Pour le mobile */
+            margin-top: 60px;
+        }
+
+        .pricing-card {
+            flex: 1;
+            max-width: 450px;
+            min-width: 300px;
+            padding: 48px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Badge "Le plus populaire" pour l'offre Pro */
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            right: 32px;
+            background-color: var(--accent);
+            color: var(--bg-main);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            font-family: var(--font-heading);
+        }
+
+        .price-tag {
+            font-size: 4rem;
+            font-family: var(--font-heading);
+            font-weight: 800;
+            margin: 24px 0;
+            color: var(--text-primary);
+        }
+
+        .price-tag span {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .features-list {
+            margin: 32px 0;
+            flex-grow: 1; /* Pousse le bouton vers le bas */
+        }
+
+        .features-list li {
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Icône de coche verte devant les fonctionnalités */
+        .features-list i {
+            color: var(--accent);
+            margin-right: 12px;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        /* Carte Pro mise en avant */
+        .pricing-card.pro {
+            border-color: var(--accent);
+            background: linear-gradient(180deg, rgba(212, 255, 0, 0.05) 0%, rgba(10,10,10,0) 100%);
+        }
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            margin-top: var(--section-spacing);
+            color: var(--text-secondary);
+        }
+        
+        footer a:hover {
+            color: var(--accent);
+        }
+
+        /* =========================================
+           MEDIA QUERIES (Pour le mobile)
+        ========================================= */
+        @media (max-width: 768px) {
+            #hero h1 {
+                font-size: 3rem;
+            }
+            
+            .bento-card {
+                padding: 24px;
+            }
+            
+            .pricing-card {
+                padding: 32px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <a href="#" class="logo">
+                Mon<span class="accent-text">Folio.</span>
+            </a>
+            <a href="#pricing" class="btn-primary" style="padding: 10px 20px; font-size: 1rem;">
+                Commander
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero">
+            <div class="container">
+                <h1>Arrête d'envoyer des <br> <span class="accent-text">PDF moches.</span></h1>
+                
+                <p class="subtitle">
+                    Ton portfolio d'ingénieur professionnel, en ligne en 24h. 
+                    Sans toucher une ligne de code. Pour le prix d'un Kebab.
+                </p>
+                
+                <a href="#pricing" class="btn-primary">
+                    Obtenir mon Folio (9,99€)
+                </a>
+
+                <div class="hero-mockup-placeholder">
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--text-secondary); font-family: var(--font-heading); text-align: center;">
+                        [ Visuel Mockup MacBook ici ]<br>
+                        <span style="color: var(--accent)">Portfolio stylé en Dark Mode</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features">
+            <div class="container">
+                <h2 class="section-title">Pourquoi c'est <span class="accent-text">mieux</span> ?</h2>
+                
+                <div class="bento-grid">
+                    <div class="bento-card">
+                        <i class="ph ph-infinity feature-icon"></i>
+                        <h3>Hébergé à vie</h3>
+                        <p>Pas d'abonnement caché. Tu paies une fois, ton site reste en ligne pour toujours grâce à l'architecture moderne (Netlify).</p>
+                    </div>
+                    
+                    <div class="bento-card">
+                        <i class="ph ph-pencil-simple-line feature-icon"></i>
+                        <h3>100% Autonome</h3>
+                        <p>Ajoute tes projets, change ton CV ou tes photos via une interface admin ultra-simple. Zéro code requis.</p>
+                    </div>
+                    
+                    <div class="bento-card">
+                        <i class="ph ph-lightning feature-icon"></i>
+                        <h3>Design qui claque</h3>
+                        <p>Fini les sites Wix lents. Ton portfolio est optimisé, rapide, en Dark Mode, et validé par les recruteurs tech.</p>
+                    </div>
+                    
+                    <div class="bento-card">
+                        <i class="ph ph-lock-key feature-icon"></i>
+                        <h3>Code Privé & Sécurisé</h3>
+                        <p>Ton code source t'appartient et reste privé sur GitHub. Seul le site final est visible par les recruteurs.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="demo">
+            <div class="container">
+                <h2>Ne nous crois pas sur parole. <br><span class="accent-text">Vois le résultat.</span></h2>
+                <a href="#" target="_blank" class="btn-secondary">
+                    Voir un exemple en live <i class="ph ph-arrow-square-out" style="vertical-align: middle; margin-left: 5px;"></i>
+                </a>
+            </div>
+        </section>
+
+        <section id="pricing">
+            <div class="container">
+                <h2 class="section-title">Simple et <span class="accent-text">Accessible.</span></h2>
+                
+                <div class="pricing-grid">
+                    <div class="bento-card pricing-card">
+                        <h3>Pack Essentiel</h3>
+                        <div class="price-tag">9,99€ <span>/ unique</span></div>
+                        <p style="margin-bottom: 20px;">Parfait pour commencer rapidement.</p>
+                        
+                        <ul class="features-list">
+                            <li><i class="ph ph-check-circle"></i> Site portfolio complet</li>
+                            <li><i class="ph ph-check-circle"></i> Interface Admin (CMS) incluse</li>
+                            <li><i class="ph ph-check-circle"></i> Hébergement gratuit à vie</li>
+                            <li><i class="ph ph-check-circle"></i> Code source privé</li>
+                            <li><i class="ph ph-check-circle"></i> URL en <code>ton-nom.netlify.app</code></li>
+                        </ul>
+                        
+                        <a href="#" class="btn-secondary" style="text-align: center;">Choisir l'Essentiel</a>
+                    </div>
+
+                    <div class="bento-card pricing-card pro">
+                        <div class="popular-badge">Le plus choisi</div>
+                        
+                        <h3>Pack Pro</h3>
+                        <div class="price-tag">19,99€ <span>/ unique</span></div>
+                        <p style="margin-bottom: 20px;">Pour une image 100% professionnelle.</p>
+                        
+                        <ul class="features-list">
+                            <li><i class="ph ph-check-circle"></i> <strong>Tout le Pack Essentiel</strong></li>
+                            <li><i class="ph ph-check-circle" style="color: var(--accent)"></i> Configuration de ton nom de domaine</li>
+                            <li><i class="ph ph-check-circle" style="color: var(--accent)"></i> Certificat SSL (Cadenas vert) inclus</li>
+                            <li><i class="ph ph-check-circle"></i> URL pro en <code>prenom-nom.com</code> *</li>
+                        </ul>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 20px;">* Achat du nom de domaine non inclus (~10€/an chez Namecheap)</p>
+                        
+                        <a href="#" class="btn-primary" style="text-align: center; box-shadow: none; border: 2px solid var(--accent);">Passer Pro</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2023 MonFolio. Tous droits réservés.</p>
+            <p style="margin-top: 10px;">
+                Fait par un étudiant, pour les étudiants. 
+                <a href="#" class="accent-text">Mentions légales.</a>
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>
