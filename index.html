@@ -53,6 +53,9 @@
 
         body {
             background-color: var(--bg-main);
+            /* Ajout du motif de grille */
+            background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px; /* Espacement des points */
             color: var(--text-primary);
             font-family: var(--font-body);
             line-height: 1.6;
@@ -439,6 +442,44 @@
         }
 
         /* =========================================
+           SECTION 5: FAQ
+        ========================================= */
+        .faq-item {
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 10px;
+        }
+
+        details {
+            padding: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        summary {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 1.2rem;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        details p {
+            margin-top: 15px;
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        details[open] summary {
+            color: var(--accent);
+        }
+
+        details[open] i {
+            transform: rotate(180deg);
+        }
+
+        /* =========================================
            FOOTER
         ========================================= */
         footer {
@@ -504,7 +545,7 @@
         <section id="demo">
             <div class="container">
                 <div class="hero-image-wrapper">
-                    <img src="images/mockup.jpg" alt="Aperçu du portfolio" class="hero-mockup">
+                    <img src="images/mockup.png" alt="Aperçu du portfolio" class="hero-mockup">
                 </div>
                 <div class="text-content">
                     <h3 class="accent-text">Pourquoi un portfolio ?</h3>
@@ -588,6 +629,33 @@
             </div>
         </section>
     </main>
+
+    <section id="faq">
+        <div class="container" style="max-width: 800px;">
+            <h2 class="section-title">Questions <span class="accent-text">Fréquentes</span></h2>
+            
+            <div class="faq-item">
+                <details>
+                    <summary>Est-ce que je dois savoir coder ? <i class="ph ph-caret-down"></i></summary>
+                    <p>Absolument pas. Tu auras accès à une interface d'administration sécurisée (CMS) pour changer tes textes, ajouter des projets ou modifier ta photo en quelques clics.</p>
+                </details>
+            </div>
+
+            <div class="faq-item">
+                <details>
+                    <summary>C'est quoi Netlify ? <i class="ph ph-caret-down"></i></summary>
+                    <p>C'est l'hébergeur moderne standard pour les sites rapides. C'est gratuit, sécurisé (HTTPS inclus) et ton site ne "tombera" jamais en panne.</p>
+                </details>
+            </div>
+
+            <div class="faq-item">
+                <details>
+                    <summary>Puis-je utiliser mon propre nom de domaine ? <i class="ph ph-caret-down"></i></summary>
+                    <p>Oui ! Avec le Pack Pro, on configure tout pour toi. Tu auras juste à acheter ton nom de domaine (environ 10€/an chez Namecheap) et on s'occupe de la connexion DNS.</p>
+                </details>
+            </div>
+        </div>
+    </section>
 
     <footer>
         <div class="container">
