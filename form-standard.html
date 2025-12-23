@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commande Standard - MonFolio.</title>
+    <link rel="icon" href="images/favicon.jpg" type="image/jpeg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        :root {
+            --bg-main: #0A0A0A;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --text-primary: #EDEDED;
+            --text-secondary: #A1A1AA;
+            --border-color: #333333;
+            --accent: #D4FF00;
+            --font-heading: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-main);
+            background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        /* Navigation Retour */
+        .back-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        .back-link:hover { color: var(--accent); }
+
+        /* Conteneur Formulaire */
+        .form-container {
+            width: 100%;
+            max-width: 600px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            margin-top: 40px;
+        }
+
+        h1 { font-family: var(--font-heading); margin-bottom: 10px; text-align: center; }
+        .subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 30px; font-size: 0.9rem; }
+
+        /* Barre de progression */
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background: var(--border-color);
+            border-radius: 2px;
+            margin-bottom: 40px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        /* Étapes */
+        .step { display: none; animation: fadeIn 0.5s ease; }
+        .step.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .step-title { font-size: 1.2rem; margin-bottom: 20px; color: var(--accent); font-family: var(--font-heading); }
+
+        /* Inputs & Labels */
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-secondary); }
+        
+        input[type="text"], input[type="email"], textarea, input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            transition: border-color 0.3s;
+        }
+        input:focus, textarea:focus { outline: none; border-color: var(--accent); }
+        textarea { resize: vertical; min-height: 100px; }
+
+        /* Template Cards (Radio) */
+        .template-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+        .template-option input { display: none; }
+        .template-card {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .template-card i { font-size: 2rem; margin-bottom: 10px; display: block; color: var(--text-secondary); }
+        .template-option input:checked + .template-card {
+            border-color: var(--accent);
+            background: rgba(212, 255, 0, 0.05);
+        }
+        .template-option input:checked + .template-card i { color: var(--accent); }
+
+        /* Color Inputs */
+        .color-grid { display: flex; gap: 15px; }
+        .color-input { flex: 1; text-align: center; }
+        input[type="color"] { width: 100%; height: 40px; border: none; border-radius: 8px; cursor: pointer; background: transparent; }
+
+        /* Checkbox Option */
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: rgba(212, 255, 0, 0.05);
+            border: 1px solid var(--accent);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+        .checkbox-group input { margin-top: 4px; accent-color: var(--accent); transform: scale(1.2); }
+        .disclaimer { font-size: 0.8rem; color: var(--text-secondary); margin-left: 28px; font-style: italic; }
+
+        /* Boutons Navigation */
+        .buttons { display: flex; justify-content: space-between; margin-top: 30px; }
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-family: var(--font-heading);
+            transition: all 0.3s;
+        }
+        .btn-prev { background: transparent; color: var(--text-secondary); border: 1px solid var(--border-color); }
+        .btn-prev:hover { border-color: var(--text-primary); color: var(--text-primary); }
+        .btn-next { background: var(--accent); color: var(--bg-main); }
+        .btn-next:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(212, 255, 0, 0.3); }
+
+        @media (max-width: 600px) {
+            .template-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="back-link"><i class="ph ph-arrow-left"></i> Retour à l'accueil</a>
+
+    <div class="form-container">
+        <h1>Commande Standard</h1>
+        <p class="subtitle">Configure ton portfolio en quelques étapes.</p>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <form name="commande-standard" method="POST" data-netlify="true" enctype="multipart/form-data" id="multiStepForm">
+            <!-- Netlify Hidden Input -->
+            <input type="hidden" name="form-name" value="commande-standard">
+
+            <!-- ÉTAPE 1 : DESIGN -->
+            <div class="step active">
+                <h3 class="step-title">1. Design & Ambiance</h3>
+                
+                <label>Choisis ton Template :</label>
+                <div class="template-grid">
+                    <label class="template-option"><input type="radio" name="template" value="minimalist" checked><div class="template-card"><i class="ph ph-square"></i><span>Minimalist</span></div></label>
+                    <label class="template-option"><input type="radio" name="template" value="techie"><div class="template-card"><i class="ph ph-code"></i><span>Techie</span></div></label>
+                    <label class="template-option"><input type="radio" name="template" value="visual"><div class="template-card"><i class="ph ph-image"></i><span>Visual</span></div></label>
+                </div>
+
+                <label>Tes 3 Couleurs principales :</label>
+                <div class="color-grid">
+                    <div class="color-input"><input type="color" name="color_bg" value="#0A0A0A"><label>Fond</label></div>
+                    <div class="color-input"><input type="color" name="color_text" value="#EDEDED"><label>Texte</label></div>
+                    <div class="color-input"><input type="color" name="color_accent" value="#D4FF00"><label>Accent</label></div>
+                </div>
+            </div>
+
+            <!-- ÉTAPE 2 : IDENTITÉ -->
+            <div class="step">
+                <h3 class="step-title">2. Ton Identité</h3>
+                <div class="form-group"><label>Nom</label><input type="text" name="lastname" required placeholder="Ex: Anderson"></div>
+                <div class="form-group"><label>Prénom</label><input type="text" name="firstname" required placeholder="Ex: Thomas"></div>
+                <div class="form-group"><label>Titre du profil</label><input type="text" name="job_title" required placeholder="Ex: Étudiant Ingénieur Logiciel"></div>
+                <div class="form-group"><label>Ta Photo (Portrait)</label><input type="file" name="photo" accept="image/*" required></div>
+                <div class="form-group"><label>Lien LinkedIn / Mail</label><input type="text" name="contact_link" placeholder="https://linkedin.com/in/..."></div>
+            </div>
+
+            <!-- ÉTAPE 3 : CONTENU -->
+            <div class="step">
+                <h3 class="step-title">3. Contenu du Portfolio</h3>
+                <div class="form-group"><label>Ton Pitch (Bio courte)</label><textarea name="pitch" required placeholder="Présente-toi en quelques phrases..."></textarea></div>
+                <div class="form-group"><label>Ton Parcours (Formations & Expériences)</label><textarea name="parcours" required placeholder="Liste tes écoles et stages (Année - Titre - Lieu)..."></textarea></div>
+                <div class="form-group"><label>Tes Projets (Titre + Description + Lien)</label><textarea name="projets" required placeholder="Projet 1 : Description..."></textarea></div>
+                <div class="form-group"><label>Fichiers Projets (PDFs, Rapports...) - Optionnel</label><input type="file" name="project_files" multiple accept=".pdf,.doc,.docx"></div>
+            </div>
+
+            <!-- ÉTAPE 4 : FINALISATION -->
+            <div class="step">
+                <h3 class="step-title">4. Finalisation</h3>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" name="option_domaine" id="opt_domaine" value="oui">
+                    <label for="opt_domaine" style="margin:0; color: var(--text-primary); font-weight: 600;">✨ Option Nom de Domaine (+4,99€)</label>
+                </div>
+                <p class="disclaimer">Ce prix couvre l'installation technique. L'achat du domaine (ex: prenom.com) reste à ta charge (~10€/an chez l'hébergeur).</p>
+
+                <div style="margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 12px;">
+                    <p style="color: var(--text-primary); margin-bottom: 10px;">Récapitulatif :</p>
+                    <ul style="list-style: disc; margin-left: 20px; color: var(--text-secondary);">
+                        <li>Pack Standard (9,99€)</li>
+                        <li>Configuration Netlify incluse</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- NAVIGATION -->
+            <div class="buttons">
+                <button type="button" class="btn btn-prev" id="prevBtn" onclick="nextPrev(-1)">Précédent</button>
+                <button type="button" class="btn btn-next" id="nextBtn" onclick="nextPrev(1)">Suivant</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        let currentTab = 0;
+        showTab(currentTab);
+
+        function showTab(n) {
+            let x = document.getElementsByClassName("step");
+            x[n].classList.add("active");
+            document.getElementById("prevBtn").style.display = n == 0 ? "none" : "inline";
+            
+            let nextBtn = document.getElementById("nextBtn");
+            if (n == (x.length - 1)) {
+                nextBtn.innerHTML = "Valider ma commande Standard";
+                nextBtn.setAttribute("type", "submit");
+                nextBtn.removeAttribute("onclick");
+            } else {
+                nextBtn.innerHTML = "Suivant";
+                nextBtn.setAttribute("type", "button");
+                nextBtn.setAttribute("onclick", "nextPrev(1)");
+            }
+            updateProgressBar(n, x.length);
+        }
+
+        function nextPrev(n) {
+            let x = document.getElementsByClassName("step");
+            if (n == 1 && !validateForm()) return false;
+            x[currentTab].classList.remove("active");
+            currentTab = currentTab + n;
+            showTab(currentTab);
+        }
+
+        function validateForm() {
+            let x = document.getElementsByClassName("step");
+            let inputs = x[currentTab].querySelectorAll("input[required], textarea[required]");
+            let valid = true;
+            for (let i = 0; i < inputs.length; i++) {
+                if (inputs[i].value == "") {
+                    inputs[i].style.borderColor = "#ff5f56";
+                    valid = false;
+                } else {
+                    inputs[i].style.borderColor = "var(--border-color)";
+                }
+            }
+            return valid;
+        }
+
+        function updateProgressBar(n, total) {
+            let percent = ((n + 1) / total) * 100;
+            document.getElementById("progressBar").style.width = percent + "%";
+        }
+    </script>
+</body>
+</html>
