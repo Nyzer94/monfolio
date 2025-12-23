@@ -510,6 +510,20 @@
             transform: scale(1.05);
             z-index: 2;
         }
+        
+        /* Option Domaine */
+        .domain-option {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .domain-option p {
+            margin: 0;
+            line-height: 1.4;
+        }
 
         /* =========================================
            SECTION 5: FAQ
@@ -547,6 +561,46 @@
 
         details[open] i {
             transform: rotate(180deg);
+        }
+
+        /* =========================================
+           SECTION 6: TEASING (Coming Soon)
+        ========================================= */
+        #coming-soon {
+            padding-bottom: var(--section-spacing);
+        }
+
+        .coming-soon-card {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px dashed var(--accent);
+            border-radius: 16px;
+            padding: 30px;
+            background: transparent;
+            text-align: center;
+            position: relative;
+        }
+
+        .coming-soon-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--accent);
+            color: var(--bg-main);
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: var(--font-heading);
+            letter-spacing: 1px;
+        }
+        
+        @media (max-width: 600px) {
+            .coming-soon-badge {
+                position: static;
+                display: inline-block;
+                margin-bottom: 15px;
+            }
         }
 
         /* =========================================
@@ -628,7 +682,7 @@
                 <h1>C'est la guerre des stages.<br> <span class="accent-text">Fais la différence.</span></h1>
                 
                 <p class="subtitle">
-                    Pendant que les autres envoient le même CV Word noir et blanc, toi tu envoies une URL. C'est comme arriver en costume à une soirée pyjama.<br>T'as un coup d'avance.
+                    Pendant que les autres envoient le même CV Canva, toi tu envoies ton propre site.<br>T'as un coup d'avance.
                     <br><br><strong>Obtiens ton site pro en 24h.<br>Pour le prix d'un Kebab (9,99€).</strong>
                 </p>
                 <a href="#pricing" class="btn-primary">Je hack ma candidature</a>
@@ -669,7 +723,7 @@
                                 </div>
                                 <div class="browser-content">
                                     <iframe src="https://rayanchennaoui.online" title="Demo"></iframe>
-                                    <img src="images/mockup.png" alt="Mobile Preview">
+                                    <img src="images/mockup.jpg" alt="Mobile Preview">
                                 </div>
                             </div>
                         </div>
@@ -714,41 +768,52 @@
                 <h2 class="section-title">Simple et <span class="accent-text">Accessible.</span></h2>
                 
                 <div class="pricing-grid">
+                    <!-- Offre 1 : Standard -->
                     <div class="bento-card pricing-card">
-                        <h3>Pack Essentiel</h3>
+                        <h3>Pack Standard</h3>
                         <div class="price-tag">9,99€ <span>/ unique</span></div>
-                        <p style="margin-bottom: 20px;">Parfait pour commencer rapidement.</p>
+                        <p style="margin-bottom: 20px;">L'essentiel pour être visible.</p>
                         
                         <ul class="features-list">
-                            <li><i class="ph ph-check-circle"></i> Site portfolio complet</li>
-                            <li><i class="ph ph-check-circle"></i> Interface Admin (CMS) incluse</li>
-                            <li><i class="ph ph-check-circle"></i> Hébergement gratuit à vie</li>
-                            <li><i class="ph ph-check-circle"></i> Code source privé</li>
-                            <li><i class="ph ph-check-circle"></i> URL en <code>ton-nom.netlify.app</code></li>
+                            <li><i class="ph ph-check-circle"></i> Description</li>
+                            <li><i class="ph ph-check-circle"></i> Parcours scolaire</li>
+                            <li><i class="ph ph-check-circle"></i> Projets</li>
+                            <li><i class="ph ph-check-circle"></i> Catégorie TPs/Autres</li>
+                            <li><i class="ph ph-check-circle"></i> Contact (Mail/LinkedIn)</li>
                         </ul>
                         
+                        <div class="domain-option">
+                            <p style="color: var(--text-primary); font-weight: 700; font-size: 0.9rem;">✨ Option Nom de domaine (.com) : +4,99€</p>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary);">(Config complète + Certificat SSL)</p>
+                        </div>
+                        
                         <a href="#" class="btn-secondary js-flip-btn" data-back="Contacte-nous : hello@monfolio.fake" style="text-align: center;">
-                            <span class="btn-text">Choisir l'Essentiel</span>
+                            <span class="btn-text">Choisir Standard</span>
                         </a>
                     </div>
 
-                    <div class="bento-card pricing-card pro">
-                        <div class="popular-badge">Le plus choisi</div>
+                    <!-- Offre 2 : Custom (Mise en avant) -->
+                    <div class="bento-card pricing-card custom">
+                        <div class="popular-badge">Le plus populaire</div>
                         
-                        <h3>Pack Pro</h3>
-                        <div class="price-tag">19,99€ <span>/ unique</span></div>
-                        <p style="margin-bottom: 20px;">Pour une image 100% professionnelle.</p>
+                        <h3>Pack Custom</h3>
+                        <div class="price-tag">14,99€ <span>/ unique</span></div>
+                        <p style="margin-bottom: 20px;">Pour ceux qui veulent plus.</p>
                         
                         <ul class="features-list">
-                            <li><i class="ph ph-check-circle"></i> <strong>Tout le Pack Essentiel</strong></li>
-                            <li><i class="ph ph-check-circle" style="color: var(--accent)"></i> Configuration de ton nom de domaine</li>
-                            <li><i class="ph ph-check-circle" style="color: var(--accent)"></i> Certificat SSL (Cadenas vert) inclus</li>
-                            <li><i class="ph ph-check-circle"></i> URL pro en <code>prenom-nom.com</code> *</li>
+                            <li><i class="ph ph-check-circle"></i> <strong>Tout le Standard</strong></li>
+                            <li><i class="ph ph-check-circle" style="color: var(--accent)"></i> Fonctionnalités avancées</li>
+                            <li><i class="ph ph-check-circle" style="color: var(--accent)"></i> Sur mesure</li>
+                            <li><i class="ph ph-check-circle" style="color: var(--accent)"></i> Animations fluides</li>
                         </ul>
-                        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 20px;">* Achat du nom de domaine non inclus (~10€/an chez Namecheap)</p>
+                        
+                        <div class="domain-option">
+                            <p style="color: var(--text-primary); font-weight: 700; font-size: 0.9rem;">✨ Option Nom de domaine (.com) : +4,99€</p>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary);">(Config complète + Certificat SSL)</p>
+                        </div>
                         
                         <a href="#" class="btn-primary js-flip-btn" data-back="Contacte-nous : hello@monfolio.fake" style="text-align: center; box-shadow: none; border: 2px solid var(--accent);">
-                            <span class="btn-text">Passer Pro</span>
+                            <span class="btn-text">Choisir Custom</span>
                         </a>
                     </div>
                 </div>
@@ -779,6 +844,18 @@
                     <summary>Puis-je utiliser mon propre nom de domaine ? <i class="ph ph-caret-down"></i></summary>
                     <p>Oui ! Avec le Pack Pro, on configure tout pour toi. Tu auras juste à acheter ton nom de domaine (environ 10€/an chez Namecheap) et on s'occupe de la connexion DNS.</p>
                 </details>
+            </div>
+        </div>
+    </section>
+
+    <section id="coming-soon">
+        <div class="container">
+            <div class="coming-soon-card">
+                <div class="coming-soon-badge">COMING SOON</div>
+                <i class="ph ph-file-code" style="font-size: 2.5rem; color: var(--text-secondary); margin-bottom: 15px; display: block;"></i>
+                <h3>Le CV Parfait arrive.</h3>
+                <p style="margin: 10px 0;">Oublie Canva. Bientôt, on lance notre service de création de CV en LaTeX (100% compatible ATS/Robots recruteurs). Tu nous fournis tes infos (projets, skills, dates), on gère tout le code complexe pour toi.</p>
+                <p style="color: var(--accent); font-weight: 700; margin-top: 10px;">Seulement 2,99€</p>
             </div>
         </div>
     </section>
