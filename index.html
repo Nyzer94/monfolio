@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MonFolio..</title>
-    <meta name="description" content="AC'est la guerre des stages. Fais la différence. Obtiens ton portfolio d'ingénieur professionnel, en ligne, sans coder.">
+    <title>MonFolio. - Ton portfolio d'ingénieur pro en 24h.</title>
+    <meta name="description" content="Arrête d'envoyer des PDF moches. Obtiens ton portfolio d'ingénieur professionnel, en ligne, sans coder.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -341,24 +341,91 @@
         }
 
         /* =========================================
-           SECTION 3: DEMO (La preuve)
+           SECTION 3: COMMENT ÇA MARCHE
         ========================================= */
-        #demo {
-            padding-bottom: 100px;
-            /* Suppression du fond et des bordures */
-            background-color: transparent;
-            border: none;
+        #how-it-works {
+            padding: var(--section-spacing) 0;
+            text-align: center;
         }
 
-        #demo .container {
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            margin-top: 60px;
+            position: relative;
+        }
+
+        .timeline-step {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            padding: 0 10px;
+        }
+
+        /* Flèches entre les étapes */
+        .timeline-step:not(:last-child)::after {
+            content: "→";
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--accent);
+            position: absolute;
+            top: 80px; /* Ajusté selon la hauteur du visuel */
+            right: -20px;
+            transform: translateX(50%);
+        }
+
+        .step-visual {
+            width: 100%;
+            height: 200px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
             display: flex;
             align-items: center;
-            gap: 60px;
+            justify-content: center;
+            margin-bottom: 24px;
+            overflow: hidden;
+            position: relative;
         }
 
-        #demo h3 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
+        .step-visual i {
+            font-size: 3rem;
+            color: var(--accent);
+        }
+
+        /* Browser Mockup */
+        .browser-mockup {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background: #1e1e1e;
+        }
+
+        .browser-header {
+            height: 24px;
+            background: #2d2d2d;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            gap: 6px;
+            border-bottom: 1px solid #333;
+        }
+
+        .browser-dot { width: 8px; height: 8px; border-radius: 50%; }
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
+
+        .browser-content { flex: 1; position: relative; background: white; }
+        .browser-content iframe { width: 100%; height: 100%; border: none; }
+        .browser-content img { 
+            width: 100%; height: 100%; object-fit: cover; 
+            display: none; /* Caché par défaut sur desktop */
         }
 
         /* =========================================
@@ -384,6 +451,7 @@
             display: flex;
             flex-direction: column;
             position: relative;
+            transition: transform 0.3s ease;
         }
 
         /* Badge "Le plus populaire" pour l'offre Pro */
@@ -435,10 +503,12 @@
             flex-shrink: 0;
         }
 
-        /* Carte Pro mise en avant */
-        .pricing-card.pro {
+        /* Carte Custom mise en avant */
+        .pricing-card.custom {
             border-color: var(--accent);
             background: linear-gradient(180deg, rgba(212, 255, 0, 0.05) 0%, rgba(10,10,10,0) 100%);
+            transform: scale(1.05);
+            z-index: 2;
         }
 
         /* =========================================
@@ -508,11 +578,28 @@
             
             .pricing-card {
                 padding: 32px;
+                min-width: 100%; /* Empilement sur mobile */
             }
             
-            #demo .container {
+            /* Timeline Mobile */
+            .timeline {
                 flex-direction: column;
-                text-align: center;
+                gap: 40px;
+            }
+            
+            .timeline-step:not(:last-child)::after {
+                content: "↓";
+                top: auto;
+                bottom: -35px;
+                right: 50%;
+            }
+            
+            /* Masquer iframe sur mobile */
+            .browser-content iframe { display: none; }
+            .browser-content img { display: block; }
+            
+            .pricing-card.custom {
+                transform: scale(1);
             }
         }
 
@@ -541,21 +628,54 @@
                 <h1>C'est la guerre des stages.<br> <span class="accent-text">Fais la différence.</span></h1>
                 
                 <p class="subtitle">
-                    Pendant que les autres envoient le même CV Canva noir et blanc, toi tu envoies une URL. <br>T'as un coup d'avance.
+                    Pendant que les autres envoient le même CV Word noir et blanc, toi tu envoies une URL. C'est comme arriver en costume à une soirée pyjama.<br>T'as un coup d'avance.
                     <br><br><strong>Obtiens ton site pro en 24h.<br>Pour le prix d'un Kebab (9,99€).</strong>
                 </p>
                 <a href="#pricing" class="btn-primary">Je hack ma candidature</a>
             </div>
         </section>
 
-        <section id="demo">
+        <section id="how-it-works">
             <div class="container">
-                <div class="hero-image-wrapper">
-                    <img src="images/mockup.jpg" alt="Aperçu du portfolio" class="hero-mockup">
-                </div>
-                <div class="text-content">
-                    <h3 class="accent-text">Rejoins l'élite.</h3>
-                    <p>Les meilleurs étudiants en école d'ingé, en info...ont déjà leur site. Le portfolio, c'est l'extension indispensable de ta candidature pour centraliser tes projets et tes preuves techniques. Ne reste pas sur la touche.</p>
+                <h2 class="section-title">On t'explique comment ça fonctionne en <span class="accent-text">3 étapes</span></h2>
+                
+                <div class="timeline">
+                    <!-- Étape 1 -->
+                    <div class="timeline-step">
+                        <div class="step-visual">
+                            <div style="color: var(--text-secondary); font-family: monospace;">[GIF CODE QUI DÉFILE]</div>
+                        </div>
+                        <h3>1. Le Brief</h3>
+                        <p>On entre en contact. Tu réponds à un questionnaire simple pour nous donner ton cahier des charges. On code tout à ta place.</p>
+                    </div>
+
+                    <!-- Étape 2 -->
+                    <div class="timeline-step">
+                        <div class="step-visual">
+                            <i class="ph ph-sliders-horizontal"></i>
+                        </div>
+                        <h3>2. L'Interface Admin</h3>
+                        <p>On te crée une interface sécurisée. Tu reçois un lien magique pour déposer tes fichiers, ajouter tes projets et tes TPs en un clic.</p>
+                    </div>
+
+                    <!-- Étape 3 -->
+                    <div class="timeline-step">
+                        <div class="step-visual" style="padding: 0; border: none; background: transparent;">
+                            <div class="browser-mockup">
+                                <div class="browser-header">
+                                    <div class="browser-dot dot-red"></div>
+                                    <div class="browser-dot dot-yellow"></div>
+                                    <div class="browser-dot dot-green"></div>
+                                </div>
+                                <div class="browser-content">
+                                    <iframe src="https://rayanchennaoui.online" title="Demo"></iframe>
+                                    <img src="images/mockup.png" alt="Mobile Preview">
+                                </div>
+                            </div>
+                        </div>
+                        <h3>3. La Mise en Ligne</h3>
+                        <p>Ton site est prêt à être partagé aux recruteurs !</p>
+                    </div>
                 </div>
             </div>
         </section>
