@@ -229,10 +229,11 @@
             width: 100%;
             top: 0;
             z-index: 100;
-            /* Fond semi-transparent pour le header */
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--border-color);
+            /* Style minimaliste bulles */
+            background: transparent;
+            backdrop-filter: none;
+            border-bottom: none;
+            pointer-events: none; /* Clics passent à travers */
         }
 
         header .container {
@@ -247,12 +248,36 @@
             font-weight: 800;
             letter-spacing: -1px;
         }
+        
+        /* Style "Bulle" pour Logo et Bouton du header */
+        header .logo,
+        header .btn-primary {
+            pointer-events: auto;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            padding: 10px 24px;
+            border-radius: 50px;
+            box-shadow: 0 4px 20px rgba(212, 255, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        /* Ajustement spécifique bouton header */
+        header .btn-primary {
+            color: var(--accent);
+        }
+        
+        header .logo:hover,
+        header .btn-primary:hover {
+            border-color: var(--accent);
+            box-shadow: 0 6px 25px rgba(212, 255, 0, 0.3);
+        }
 
         /* =========================================
            SECTION 1: HERO (L'accroche)
         ========================================= */
         #hero {
-            padding-top: 150px; /* Espace pour le header fixe */
+            padding-top: 140px; /* Espace réduit pour header flottant */
             padding-bottom: 150px; /* Espace augmenté avant la section suivante */
             text-align: center;
             /* Petit effet de dégradé subtil en fond */
@@ -671,7 +696,7 @@
             <a href="#" class="logo">
                 Mon<span class="accent-text">Folio.</span>
             </a>
-            <a href="#pricing" class="btn-primary" style="padding: 10px 20px; font-size: 1rem;">
+            <a href="#pricing" class="btn-primary" style="font-size: 1rem;">
                 Commander
             </a>
         </div>
