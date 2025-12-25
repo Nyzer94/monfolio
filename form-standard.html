@@ -296,6 +296,27 @@
         .custom-title { font-weight: 700; font-size: 1rem; margin-bottom: 4px; font-family: var(--font-heading); }
         .custom-desc { font-size: 0.75rem; line-height: 1.3; color: var(--bg-main); opacity: 0.85; }
 
+        /* Extra Block Section */
+        .extra-block-container {
+            border: 1px dashed var(--border-color);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 20px;
+            margin-top: 30px;
+        }
+        .extra-block-container h4 {
+            color: var(--accent);
+            font-family: var(--font-heading);
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+        .extra-block-container p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
         @media (max-width: 600px) {
             .design-grid-2x2 { grid-template-columns: 1fr; }
         }
@@ -394,9 +415,8 @@
                 <div class="form-group"><label>Nom</label><input type="text" name="lastname" required placeholder="Ex: Anderson"></div>
                 <div class="form-group"><label>Prénom</label><input type="text" name="firstname" required placeholder="Ex: Thomas"></div>
                 <div class="form-group"><label>Titre du profil</label><input type="text" name="job_title" required placeholder="Ex: Étudiant Ingénieur Logiciel"></div>
-                <div class="form-group"><label>Ta Photo Portrait (si tu souhaites l'ajouter à ton portfolio, optionnel)</label><input type="file" name="photo" accept="image/*"></div>
-                <div class="form-group"><label>Lien LinkedIn</label><input type="text" name="contact_link" placeholder="https://linkedin.com/in/..."></div>
-                <div class="form-group"><label>Mail</label><input type="text" name="contact_link" placeholder="tonadressemail@gmail.com..."></div>
+                <div class="form-group"><label>Ta Photo (Portrait)</label><input type="file" name="photo" accept="image/*" required></div>
+                <div class="form-group"><label>Lien LinkedIn / Mail</label><input type="text" name="contact_link" placeholder="https://linkedin.com/in/..."></div>
             </div>
 
             <!-- ÉTAPE 3 : CONTENU -->
@@ -405,9 +425,19 @@
                 <div class="form-group"><label>Ton Pitch (Bio courte)</label><textarea name="pitch" required placeholder="Présente-toi en quelques phrases..."></textarea></div>
                 <div class="form-group"><label>Ton Parcours (Formations & Expériences)</label><textarea name="parcours" required placeholder="Liste tes écoles et stages (Année - Titre - Lieu)..."></textarea></div>
                 <div class="form-group"><label>Tes Projets (Titre + Description + Lien)</label><textarea name="projets" required placeholder="Projet 1 : Description..."></textarea></div>
-                <div class="form-group"><label>Dossier .zip contenant tes projets (en .pdf compressé) - Tu peux le faire manuellement plus tard</label><input type="file" name="project_files" multiple accept=".pdf,.doc,.docx"></div>
-                <div class="form-group"><label>Si tu souhaites ajouter un bloc supplémentaire, ajoute un dossier .zip contenant les éléments supplémentaires (PDFs, liens...) - Tu peux le faire manuellement plus tard</label><input type="file" name="project_files" multiple accept=".pdf,.doc,.docx"></div>
+                <div class="form-group"><label>Fichiers Projets (PDFs, Rapports...) - Optionnel</label><input type="file" name="project_files" multiple accept=".pdf,.doc,.docx"></div>
 
+                <div class="extra-block-container">
+                    <h4>✨ Bloc supplémentaire (Optionnel)</h4>
+                    <p>Si tu souhaites avoir un second bloc en plus du bloc 'Projets', indique ici le nom de ce bloc et ses sous-catégories. Tu peux aussi fournir un dossier .zip contenant les éléments (PDF, liens...).</p>
+                    <div class="form-group">
+                        <textarea name="extra_block_details" placeholder="Ex: Bloc 'Certifications', Sous-catégories : AWS, Azure..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Dossier .zip (éléments du bloc)</label>
+                        <input type="file" name="extra_block_file" accept=".zip,.rar,.7z">
+                    </div>
+                </div>
             </div>
 
             <!-- ÉTAPE 4 : FINALISATION -->
@@ -502,7 +532,3 @@
     </script>
 </body>
 </html>
-
-
-
-
