@@ -339,7 +339,7 @@
             <div class="progress-bar" id="progressBar"></div>
         </div>
 
-        <form name="commande-standard" method="POST" data-netlify="true" enctype="multipart/form-data" id="multiStepForm">
+        <form name="commande-standard" method="POST" data-netlify="true" action="confirmation.html" enctype="multipart/form-data" id="multiStepForm">
             <!-- Netlify Hidden Input -->
             <input type="hidden" name="form-name" value="commande-standard">
 
@@ -473,34 +473,65 @@
 
         function showTab(n) {
             let x = document.getElementsByClassName("step");
-            x[n].classList.add("active");
-            document.getElementById("prevBtn").style.display = n == 0 ? "none" : "inline";
             
+            // Sécurité anti-crash si n dépasse le nombre d'étapes
+            if (!x[n]) return;
+
+            x[n].classList.add("active");
+            
+            // Gestion bouton Précédent
+            if (n == 0) {
+                document.getElementById("prevBtn").style.display = "none";
+            } else {
+                document.getElementById("prevBtn").style.display = "inline";
+            }
+            
+            // Gestion bouton Suivant / Valider
             let nextBtn = document.getElementById("nextBtn");
             if (n == (x.length - 1)) {
-                nextBtn.innerHTML = "Valider ma commande Standard";
-                nextBtn.setAttribute("type", "submit");
-                nextBtn.removeAttribute("onclick");
+                nextBtn.innerHTML = "Valider ma commande";
+                // On change le comportement pour que le prochain clic envoie le formulaire
+                nextBtn.setAttribute("onclick", "nextPrev(1)"); 
             } else {
                 nextBtn.innerHTML = "Suivant";
-                nextBtn.setAttribute("type", "button");
                 nextBtn.setAttribute("onclick", "nextPrev(1)");
             }
+            
             updateProgressBar(n, x.length);
         }
 
         function nextPrev(n) {
             let x = document.getElementsByClassName("step");
+            
+            // Si on clique sur Suivant et que le formulaire n'est pas valide -> Stop
             if (n == 1 && !validateForm()) return false;
+            
+            // Masquer l'étape actuelle
             x[currentTab].classList.remove("active");
+            
+            // Incrémenter l'index
             currentTab = currentTab + n;
+            
+            // --- C'EST ICI QUE LA MAGIE OPÈRE ---
+            // Si on a dépassé la dernière étape (donc on a cliqué sur Valider à la fin)
+            if (currentTab >= x.length) {
+                // On soumet le formulaire
+                document.getElementById("multiStepForm").submit();
+                return false;
+            }
+            
+            // Sinon on affiche la suite
             showTab(currentTab);
         }
 
         function validateForm() {
             let x = document.getElementsByClassName("step");
+            // Sécurité si l'onglet n'existe pas
+            if (!x[currentTab]) return true;
+
             let inputs = x[currentTab].querySelectorAll("input[required], textarea[required]");
             let valid = true;
+            
             for (let i = 0; i < inputs.length; i++) {
                 if (inputs[i].value == "") {
                     inputs[i].style.borderColor = "#ff5f56";
@@ -510,16 +541,21 @@
                 }
             }
 
-            // Validation spécifique pour l'étape 1 (Template)
+            // Validation spécifique Étape 1 (Template)
             if (currentTab == 0) {
+                // Vérifier si un template radio est coché OU si on a cliqué sur le lien custom (qui est une redirection, pas un submit)
+                // Note: Le lien custom redirigeant ailleurs, on n'a pas besoin de valider ici s'il part.
+                // Mais pour ceux qui restent, on vérifie les radios.
                 let templates = document.getElementsByName("template");
                 let templateSelected = false;
                 for (let i = 0; i < templates.length; i++) {
                     if (templates[i].checked) templateSelected = true;
                 }
+                // Si pas de template coché, on bloque
                 if (!templateSelected) {
-                    alert("Veuillez sélectionner un template pour continuer.");
-                    valid = false;
+                     // Petite astuce : on colore les bordures des cartes en rouge si oubli
+                     alert("Choisis un template pour continuer !");
+                     valid = false;
                 }
             }
             return valid;
@@ -532,5 +568,3 @@
     </script>
 </body>
 </html>
-
-
