@@ -247,6 +247,43 @@
             box-shadow: 0 0 0 3px var(--bg-main), 0 0 0 5px var(--accent);
         }
 
+        /* Warning Box */
+        .warning-box {
+            background: rgba(212, 255, 0, 0.05);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            line-height: 1.5;
+        }
+
+        /* New Template Wrapper & Button */
+        .template-wrapper { display: flex; flex-direction: column; gap: 10px; }
+        .btn-visit {
+            display: block; width: 100%; padding: 8px;
+            border: 1px solid var(--accent); color: var(--accent);
+            text-align: center; text-decoration: none; border-radius: 6px;
+            font-size: 0.8rem; font-weight: 600; transition: all 0.3s;
+            background: transparent;
+        }
+        .btn-visit:hover { background: var(--accent); color: var(--bg-main); }
+
+        /* Custom Pack Block */
+        .custom-card-style {
+            background: var(--accent); color: var(--bg-main);
+            border-radius: 12px; overflow: hidden; height: 100%;
+            display: flex; flex-direction: column; transition: transform 0.2s;
+            cursor: pointer;
+        }
+        .custom-card-style:hover { transform: scale(1.02); }
+        .custom-card-style img { width: 100%; aspect-ratio: 16/9; object-fit: cover; mix-blend-mode: multiply; }
+        .custom-note { font-size: 0.75rem; color: var(--text-secondary); font-style: italic; margin-top: 5px; text-align: center; }
+
         @media (max-width: 600px) {
             .design-grid-2x2 { grid-template-columns: 1fr; }
         }
@@ -259,6 +296,11 @@
     <div class="form-container">
         <h1>Commande Standard</h1>
         <p class="subtitle">Configure ton portfolio en quelques étapes.</p>
+
+        <div class="warning-box">
+            <i class="ph ph-warning"></i>
+            <span>⚠️ Important : Un lien vers tes fichiers projets (ZIP/Drive) te sera demandé à l'étape 3. Assure-toi qu'ils sont prêts avant de commencer pour ne pas perdre ta progression.</span>
+        </div>
 
         <div class="progress-container">
             <div class="progress-bar" id="progressBar"></div>
@@ -274,41 +316,49 @@
 
                 <div class="design-grid-2x2">
                     <!-- Minimalist -->
-                    <label class="design-option">
-                        <input type="radio" name="template" value="minimalist" checked>
-                        <div class="design-card">
-                            <img src="images/template-a.png" alt="Minimalist">
-                            <div class="design-card-content">Minimalist</div>
-                        </div>
-                    </label>
+                    <div class="template-wrapper">
+                        <label class="design-option">
+                            <input type="radio" name="template" value="minimalist" checked>
+                            <div class="design-card">
+                                <img src="images/template-a.png" alt="Minimalist">
+                                <div class="design-card-content">Minimalist</div>
+                            </div>
+                        </label>
+                        <a href="#" target="_blank" class="btn-visit">Visiter le site</a>
+                    </div>
 
                     <!-- Techie -->
-                    <label class="design-option">
-                        <input type="radio" name="template" value="techie">
-                        <div class="design-card">
-                            <img src="images/template-b.png" alt="Techie">
-                            <div class="design-card-content">Techie</div>
-                        </div>
-                    </label>
+                    <div class="template-wrapper">
+                        <label class="design-option">
+                            <input type="radio" name="template" value="techie">
+                            <div class="design-card">
+                                <img src="images/template-b.png" alt="Techie">
+                                <div class="design-card-content">Techie</div>
+                            </div>
+                        </label>
+                        <a href="#" target="_blank" class="btn-visit">Visiter le site</a>
+                    </div>
 
                     <!-- Visual -->
-                    <label class="design-option">
-                        <input type="radio" name="template" value="visual">
-                        <div class="design-card">
-                            <img src="images/template-c.png" alt="Visual">
-                            <div class="design-card-content">Visual</div>
-                        </div>
-                    </label>
+                    <div class="template-wrapper">
+                        <label class="design-option">
+                            <input type="radio" name="template" value="visual">
+                            <div class="design-card">
+                                <img src="images/template-c.png" alt="Visual">
+                                <div class="design-card-content">Visual</div>
+                            </div>
+                        </label>
+                        <a href="#" target="_blank" class="btn-visit">Visiter le site</a>
+                    </div>
 
                     <!-- Custom Pack -->
-                    <label class="design-option">
-                        <input type="radio" name="template" value="custom">
-                        <div class="design-card custom-card">
-                            <span class="custom-badge">BEST SELLER</span>
+                    <div class="template-wrapper">
+                        <div class="custom-card-style" onclick="window.location.href='https://monfolioo.netlify.app/form-custom#'">
                             <img src="images/custom-preview.jpg" alt="Custom">
-                            <div class="design-card-content">Pack Custom (+5€)</div>
+                            <div class="custom-card-content">Pack Custom (+5€)</div>
                         </div>
-                    </label>
+                        <p class="custom-note">Si tu choisis cette option, tu seras redirigé(e) vers le formulaire du Pack Custom à 14,99€.</p>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -410,6 +460,19 @@
                     valid = false;
                 } else {
                     inputs[i].style.borderColor = "var(--border-color)";
+                }
+            }
+
+            // Validation spécifique pour l'étape 1 (Template)
+            if (currentTab == 0) {
+                let templates = document.getElementsByName("template");
+                let templateSelected = false;
+                for (let i = 0; i < templates.length; i++) {
+                    if (templates[i].checked) templateSelected = true;
+                }
+                if (!templateSelected) {
+                    alert("Veuillez sélectionner un template pour continuer.");
+                    valid = false;
                 }
             }
             return valid;
